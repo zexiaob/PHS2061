@@ -222,7 +222,6 @@ LT_V_Vs = [-0.01,
            1.700,
            1.800,
            1.900,
-           1.997,
            2.00,
            2.10,
            2.20,
@@ -270,7 +269,6 @@ LT_Vs = [0.0006,
          0.0598,
          0.0637,
          0.0681,
-         0.0695,
          0.0741,
          0.0791,
          0.0838,
@@ -315,7 +313,6 @@ LT_Vp = [0.0016,
          0.0417,
          0.0450,
          0.0476,
-         0.0506,
          0.0515,
          0.0544,
          0.0577,
@@ -346,15 +343,62 @@ LT_V_Vs = np.array(LT_V_Vs)
 LT_Vs = np.array(LT_Vs)
 LT_Vp = np.array(LT_Vp)
 
+LT_Ip = LT_Vp/10 # in mA
+RT_Ip = RT_Vp/10
+
+
 plt.figure(1)
 plt.figure(figsize=(10,6))
-plt.plot(RT_V_Vs,RT_Vp,ls = "none", marker = "x", color = "black", label="room temptaure")
-plt.plot(LT_V_Vs,LT_Vp,ls = "none", marker = "x", color = "red", label="low temptaure")
-plt.ylim(0, 0.05)
+plt.plot(RT_V_Vs,RT_Ip,ls = "none", marker = "x", color = "black", label="With Xe gas")
+plt.plot(LT_V_Vs,LT_Ip,ls = "none", marker = "x", color = "red", label="Xe frozen out")
+plt.xlim(0,3.5)
+plt.ylim(0,0.01)
 plt.xlabel("V-Vs[V]")
-plt.ylabel("Vp[V]")
+plt.ylabel("Ip[mA]")
 plt.legend()
 plt.show
+
+
+# 截断RT_V_Vs和LT_V_Vs到3.5V之前
+RT_V_Vs_truncated = RT_V_Vs[RT_V_Vs <= 3.5]
+LT_V_Vs_truncated = LT_V_Vs[LT_V_Vs <= 3.5]
+
+# 截断RT_Vp和LT_Vp以匹配上述截断
+RT_Vp_truncated = RT_Vp[:len(RT_V_Vs_truncated)]
+LT_Vp_truncated = LT_Vp[:len(LT_V_Vs_truncated)]
+
+RT_Vs_truncated = RT_Vs[:len(RT_V_Vs_truncated)]
+LT_Vs_truncated = LT_Vs[:len(LT_V_Vs_truncated)]
+
+T = RT_Vp_truncated/LT_Vp_truncated
+
+plt.figure(2)
+plt.figure(figsize=(10,6))
+plt.plot(LT_V_Vs_truncated,T,ls = "none", marker = "x", color = "black")
+plt.xlabel("V-Vs[V]")
+plt.ylabel("transmission probability")
+plt.title("Variation of Electron Transmission Probability(T) with Accelerating Voltage")
+plt.show()
+
+𝜎 = -np.log(T)
+
+plt.figure(3)
+plt.figure(figsize=(10,6))
+plt.plot(LT_V_Vs_truncated,𝜎,ls = "none", marker = "x", color = "black")
+plt.xlabel("V-Vs[V]")
+plt.ylabel("scattering cross-section")
+plt.title("Evolution of Scattering Cross-Section ($\sigma$) with Accelerating Voltage")
+plt.show()
+
+T_extension = (RT_Vp_truncated*LT_Vs_truncated)/(LT_Vp_truncated*RT_Vs_truncated)
+
+plt.figure(4)
+plt.figure(figsize=(10,6))
+plt.plot(LT_V_Vs_truncated,T_extension,ls = "none", marker = "x", color = "black")
+plt.xlabel("V-Vs[V]")
+plt.ylabel("transmission probability")
+plt.title("Variation of Electron Transmission Probability(T) with Accelerating Voltage")
+plt.show()
 
 def calculate_uncertainty_precision(values):
     uncertainties = []
