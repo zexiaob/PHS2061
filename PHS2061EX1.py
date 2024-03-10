@@ -382,21 +382,21 @@ LT_Vp_unc = calculate_uncertainty_precision(LT_Vp)
 
 # 创建DataFrame
 RT_data = {
-    "RT_V_Vs": RT_V_Vs,
-    "RT_V_Vs_unc": RT_V_Vs_unc,
-    "RT_Vs": RT_Vs,
-    "RT_Vs_unc": RT_Vs_unc,
-    "RT_Vp": RT_Vp,
-    "RT_Vp_unc": RT_Vp_unc
+    "RT_V_Vs[V]": RT_V_Vs,
+    "RT_V_Vs_unc[V]": RT_V_Vs_unc,
+    "RT_Vs[V]": RT_Vs,
+    "RT_Vs_unc[V]": RT_Vs_unc,
+    "RT_Vp[V]": RT_Vp,
+    "RT_Vp_unc[V]": RT_Vp_unc
 }
 
 LT_data = {
-    "LT_V_Vs": LT_V_Vs,
-    "LT_V_Vs_unc": LT_V_Vs_unc,
-    "LT_Vs": LT_Vs,
-    "LT_Vs_unc": LT_Vs_unc,
-    "LT_Vp": LT_Vp,
-    "LT_Vp_unc": LT_Vp_unc
+    "LT_V_Vs[V]": LT_V_Vs,
+    "LT_V_Vs_unc[V]": LT_V_Vs_unc,
+    "LT_Vs[V]": LT_Vs,
+    "LT_Vs_unc[V]": LT_Vs_unc,
+    "LT_Vp[V]": LT_Vp,
+    "LT_Vp_unc[V]": LT_Vp_unc
     }
 
 RT_df = pd.DataFrame(RT_data)
