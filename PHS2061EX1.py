@@ -12,11 +12,14 @@ import pandas as pd
 """
 If you need a csv to put into the googledoc
 change "need_csv" to True
+The csv will be saved to the same path as this program
 
 some of uncertainties is wrong, pls double check!!!
 some of uncertainties is wrong, pls double check!!!
 some of uncertainties is wrong, pls double check!!!
 (Because uncertainty is calculated using the number of decimal places in the data)
+
+sorry for that I left some chinese in it, if u want to read it, pls use googletranslate
 """
 need_csv = False
 
@@ -427,6 +430,7 @@ plt.xlabel("V-Vs[V]")
 plt.ylabel("scattering cross-section")
 plt.title("Evolution of Scattering Cross-Section ($\sigma$) with Accelerating Voltage(For extension)")
 plt.show()
+
 def calculate_uncertainty_precision(values):
     uncertainties = []
     for value in values:
