@@ -6,9 +6,19 @@ Created on Mon Mar  4 15:15:06 2024
 @author: jinzeyuan
 """
 import numpy as np
-import monashspa.PHS2061 as spa
 import matplotlib.pyplot as plt
 import pandas as pd
+
+"""
+If you need a csv to put into the googledoc
+change "need_csv" to True
+
+some of uncertainties is wrong, pls double check!!!
+some of uncertainties is wrong, pls double check!!!
+some of uncertainties is wrong, pls double check!!!
+(Because uncertainty is calculated using the number of decimal places in the data)
+"""
+need_csv = False
 
 #all in V
 RT_V_Vs = [-0.001,
@@ -370,6 +380,14 @@ LT_Vp_truncated = LT_Vp[:len(LT_V_Vs_truncated)]
 RT_Vs_truncated = RT_Vs[:len(RT_V_Vs_truncated)]
 LT_Vs_truncated = LT_Vs[:len(LT_V_Vs_truncated)]
 
+RT_V_Vs_truncated_extension = RT_V_Vs[RT_V_Vs <= 6]
+LT_V_Vs_truncated_extension = LT_V_Vs[LT_V_Vs <= 6]
+
+RT_Vp_truncated_extension = RT_Vp[:len(RT_V_Vs_truncated_extension)]
+LT_Vp_truncated_extension = LT_Vp[:len(LT_V_Vs_truncated_extension)]
+
+RT_Vs_truncated_extension = RT_Vs[:len(RT_V_Vs_truncated_extension)]
+LT_Vs_truncated_extension = LT_Vs[:len(LT_V_Vs_truncated_extension)]
 T = RT_Vp_truncated/LT_Vp_truncated
 
 plt.figure(2)
@@ -390,16 +408,25 @@ plt.ylabel("scattering cross-section")
 plt.title("Evolution of Scattering Cross-Section ($\sigma$) with Accelerating Voltage")
 plt.show()
 
-T_extension = (RT_Vp_truncated*LT_Vs_truncated)/(LT_Vp_truncated*RT_Vs_truncated)
+T_extension = (RT_Vp_truncated_extension*LT_Vs_truncated_extension)/(LT_Vp_truncated_extension*RT_Vs_truncated_extension)
 
 plt.figure(4)
 plt.figure(figsize=(10,6))
-plt.plot(LT_V_Vs_truncated,T_extension,ls = "none", marker = "x", color = "black")
+plt.plot(LT_V_Vs_truncated_extension,T_extension,ls = "none", marker = "x", color = "black")
 plt.xlabel("V-Vs[V]")
 plt.ylabel("transmission probability")
-plt.title("Variation of Electron Transmission Probability(T) with Accelerating Voltage")
+plt.title("Variation of Electron Transmission Probability(T) with Accelerating Voltage(For extension)")
 plt.show()
 
+𝜎_extension = -np.log(T_extension)
+
+plt.figure(5)
+plt.figure(figsize=(10,6))
+plt.plot(LT_V_Vs_truncated_extension,𝜎_extension,ls = "none", marker = "x", color = "black")
+plt.xlabel("V-Vs[V]")
+plt.ylabel("scattering cross-section")
+plt.title("Evolution of Scattering Cross-Section ($\sigma$) with Accelerating Voltage(For extension)")
+plt.show()
 def calculate_uncertainty_precision(values):
     uncertainties = []
     for value in values:
@@ -447,6 +474,8 @@ LT_data = {
 
 RT_df = pd.DataFrame(RT_data)
 LT_df = pd.DataFrame(LT_data)
-#RT_df.to_csv("RT_DATA.csv")
-#LT_df.to_csv("LT_DATA.csv")
+
+if need_csv:
+    RT_df.to_csv("RT_DATA.csv")
+    LT_df.to_csv("LT_DATA.csv")
 
