@@ -354,7 +354,8 @@ LT_Vp = [0.0016,
 
 df_LT = pd.read_csv('LT_DS.csv')
 df_RT = pd.read_csv('RT_DS.csv')
-print(df_LT)
+u_LT_V_Vs = df_LT['V-Vs uncertainty']
+print(u_LT_V_Vs)
 
 LT_V_Vs = np.array(LT_V_Vs)
 LT_Vs = np.array(LT_Vs)
