@@ -354,8 +354,22 @@ LT_Vp = [0.0016,
 
 df_LT = pd.read_csv('LT_DS.csv')
 df_RT = pd.read_csv('RT_DS.csv')
-u_LT_V_Vs = df_LT['V-Vs uncertainty']
-print(u_LT_V_Vs)
+
+df_u_LT_V_Vs = df_LT['V-Vs uncertainty']
+df_u_LT_Vs = df_LT['Vs uncertainty']
+df_u_LT_Vp = df_LT['Vp uncertainty']
+
+df_u_RT_V_Vs = df_RT['V-Vs uncertainty']
+df_u_RT_Vs = df_RT['Vs uncertainty']
+df_u_RT_Vp = df_RT['Vp uncertainty']
+
+u_LT_V_Vs = df_u_LT_V_Vs.to_numpy()
+u_LT_Vs = df_u_LT_Vs.to_numpy()
+u_LT_Vp = df_u_LT_Vp.to_numpy()
+
+u_RT_V_Vs = df_u_RT_V_Vs.to_numpy()
+u_RT_Vs = df_u_RT_Vs.to_numpy()
+u_RT_Vp = df_u_RT_Vp.to_numpy()
 
 LT_V_Vs = np.array(LT_V_Vs)
 LT_Vs = np.array(LT_Vs)
@@ -367,8 +381,8 @@ RT_Ip = RT_Vp/10
 
 plt.figure(1)
 plt.figure(figsize=(10,6))
-plt.plot(RT_V_Vs,RT_Ip,ls = "none", marker = "x", color = "black", label="With Xe gas")
-plt.plot(LT_V_Vs,LT_Ip,ls = "none", marker = "x", color = "red", label="Xe frozen out")
+plt.errorbar(RT_V_Vs,RT_Ip,yerr = (u_RT_Vp/10),xerr = u_RT_V_Vs,ls = "none", marker = "x", color = "black", label="With Xe gas")
+plt.errorbar(LT_V_Vs,LT_Ip,yerr = (u_LT_Vp/10),xerr = u_LT_V_Vs,ls = "none", marker = "x", color = "red", label="Xe frozen out")
 plt.xlim(0,3.5)
 plt.ylim(0,0.01)
 plt.hlines(0.0015, 0, 3.5, color = "black", ls="--")
@@ -411,8 +425,9 @@ plt.hlines(0.618,0,3.5, color = "black", ls="--")
 plt.vlines(0.903, 0, 0.7, color = "black", ls="--")
 plt.show()
 
+
 𝜎 = -np.log(T)
-print(𝜎)
+
 plt.figure(3)
 plt.figure(figsize=(10,6))
 plt.plot(LT_V_Vs_truncated,𝜎,ls = "none", marker = "x", color = "black")
@@ -420,6 +435,7 @@ plt.xlabel("V-Vs[V]")
 plt.ylabel("scattering cross-section")
 plt.title("Evolution of Scattering Cross-Section ($\sigma$) with Accelerating Voltage")
 plt.show()
+
 
 T_extension = (RT_Vp_truncated_extension*LT_Vs_truncated_extension)/(LT_Vp_truncated_extension*RT_Vs_truncated_extension)
 
