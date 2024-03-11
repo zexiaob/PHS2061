@@ -379,6 +379,15 @@ LT_Vp = np.array(LT_Vp)
 LT_Ip = LT_Vp/10 # in mA
 RT_Ip = RT_Vp/10
 
+plt.figure(1)
+plt.figure(figsize=(10,6))
+plt.errorbar(RT_V_Vs,RT_Ip,yerr = (u_RT_Vp/10),xerr = u_RT_V_Vs,ls = "--", marker = "x", color = "black", label="With Xe gas")
+plt.errorbar(LT_V_Vs,LT_Ip,yerr = (u_LT_Vp/10),xerr = u_LT_V_Vs,ls = "--", marker = "x", color = "red", label="Xe frozen out")
+plt.title("Variation of plate current(Ip) with Accelerating Voltage")
+plt.xlabel("V-Vs[V]")
+plt.ylabel("Ip[mA]")
+plt.legend()
+plt.show
 
 plt.figure(1)
 plt.figure(figsize=(10,6))
