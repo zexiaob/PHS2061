@@ -8,6 +8,7 @@ Created on Mon Mar  4 15:15:06 2024
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import sympy as sp
 
 """
 If you need a csv to put into the googledoc
@@ -404,6 +405,10 @@ LT_Vp_truncated = LT_Vp[:len(LT_V_Vs_truncated)]
 RT_Vs_truncated = RT_Vs[:len(RT_V_Vs_truncated)]
 LT_Vs_truncated = LT_Vs[:len(LT_V_Vs_truncated)]
 
+u_RT_Vp_truncated = u_RT_Vp[:len(RT_V_Vs_truncated)]
+u_LT_Vp_truncated = u_LT_Vp[:len(LT_V_Vs_truncated)]
+u_LT_V_Vs_truncated = u_LT_V_Vs[:len(LT_V_Vs_truncated)]
+
 RT_V_Vs_truncated_extension = RT_V_Vs[RT_V_Vs <= 6]
 LT_V_Vs_truncated_extension = LT_V_Vs[LT_V_Vs <= 6]
 
@@ -412,25 +417,37 @@ LT_Vp_truncated_extension = LT_Vp[:len(LT_V_Vs_truncated_extension)]
 
 RT_Vs_truncated_extension = RT_Vs[:len(RT_V_Vs_truncated_extension)]
 LT_Vs_truncated_extension = LT_Vs[:len(LT_V_Vs_truncated_extension)]
-T = RT_Vp_truncated/LT_Vp_truncated
 
+u_RT_Vp_truncated_extension = u_RT_Vp[:len(RT_V_Vs_truncated_extension)]
+u_LT_Vp_truncated_extension = u_LT_Vp[:len(LT_V_Vs_truncated_extension)]
+
+u_RT_Vs_truncated_extension = u_RT_Vs[:len(RT_V_Vs_truncated_extension)]
+u_LT_Vs_truncated_extension = u_LT_Vs[:len(LT_V_Vs_truncated_extension)]
+
+u_LT_V_Vs_truncated_extension = u_RT_V_Vs[:len(RT_V_Vs_truncated_extension)]
+u_RT_V_Vs_truncated_extension = u_RT_V_Vs[:len(RT_V_Vs_truncated_extension)]
+
+T = RT_Vp_truncated/LT_Vp_truncated
+u_T = np.sqrt(((u_RT_Vp_truncated/LT_Vp_truncated)**2)+(((-RT_Vp_truncated)*(LT_Vp_truncated**(-2))*u_LT_Vp_truncated)**2))
+print(u_T)
 plt.figure(2)
 plt.figure(figsize=(10,6))
-plt.plot(LT_V_Vs_truncated,T,ls = "none", marker = "x", color = "black")
+plt.errorbar(LT_V_Vs_truncated,T,yerr = u_T,xerr = u_LT_V_Vs_truncated ,ls = "none", marker = "x", color = "black")
 plt.xlabel("V-Vs[V]")
 plt.ylabel("transmission probability")
 plt.title("Variation of Electron Transmission Probability(T) with Accelerating Voltage")
-plt.vlines(1, 0, 0.7, color = "red", ls="--")
+plt.vlines(1, -0.3, 0.7, color = "red", ls="--")
 plt.hlines(0.618,0,3.5, color = "black", ls="--")
-plt.vlines(0.903, 0, 0.7, color = "black", ls="--")
+plt.vlines(0.903, -0.3, 0.7, color = "black", ls="--")
 plt.show()
 
 
 𝜎 = -np.log(T)
+u_𝜎 = np.abs(u_T/T)
 
 plt.figure(3)
 plt.figure(figsize=(10,6))
-plt.plot(LT_V_Vs_truncated,𝜎,ls = "none", marker = "x", color = "black")
+plt.errorbar(LT_V_Vs_truncated,𝜎,xerr = u_LT_V_Vs_truncated,yerr=u_𝜎,ls = "none", marker = "x", color = "black")
 plt.xlabel("V-Vs[V]")
 plt.ylabel("scattering cross-section")
 plt.title("Evolution of Scattering Cross-Section ($\sigma$) with Accelerating Voltage")
@@ -439,10 +456,42 @@ plt.show()
 
 T_extension = (RT_Vp_truncated_extension*LT_Vs_truncated_extension)/(LT_Vp_truncated_extension*RT_Vs_truncated_extension)
 
+a = RT_Vp_truncated_extension
+b = LT_Vs_truncated_extension
+c = LT_Vp_truncated_extension
+d = RT_Vs_truncated_extension
+ua = u_RT_Vp_truncated_extension
+ub = u_LT_Vs_truncated_extension
+uc = u_LT_Vp_truncated_extension
+ud = u_RT_Vs_truncated_extension
+
+ab = a*b
+cd = c*d
+c2d = (c**2)*d
+cd2 = c*(d**2)
+
+一 = b / cd
+二 = a / cd
+三 = ab / c2d
+四 = ab / cd2
+
+五 = 一*ua
+六 = 二*ub
+七 = 三*uc
+八 = 四*ud
+
+一 = 五**2
+二 = 六**2
+三 = 七**2
+四 = 八**2
+
+u_T_extension = np.sqrt(一+二+三+四)
+
+
 plt.figure(4)
 plt.figure(figsize=(10,6))
-plt.plot(LT_V_Vs_truncated_extension,T_extension,ls = "none", marker = "x", color = "black", label = "T consider the tube geometry")
-plt.plot(LT_V_Vs_truncated,T,ls = "none", marker = "x", color = "red", label = "T without consider the tube geometry")
+plt.errorbar(LT_V_Vs_truncated_extension,T_extension,xerr = u_LT_V_Vs_truncated_extension, yerr = u_T_extension,ls = "none", marker = "x", color = "black", label = "T consider the tube geometry")
+plt.errorbar(LT_V_Vs_truncated,T,yerr = u_T,xerr = u_LT_V_Vs_truncated ,ls = "none", marker = "x", color = "r", label = "T without consider the tube geometry")
 plt.xlabel("V-Vs[V]")
 plt.ylabel("transmission probability")
 plt.title("Variation of Electron Transmission Probability(T) with Accelerating Voltage(For extension)")
@@ -450,13 +499,16 @@ plt.legend()
 plt.show()
 
 𝜎_extension = -np.log(T_extension)
+u_𝜎_extension = np.abs(u_T_extension/T_extension)
 
 plt.figure(5)
 plt.figure(figsize=(10,6))
-plt.plot(LT_V_Vs_truncated_extension,𝜎_extension,ls = "none", marker = "x", color = "black")
+plt.errorbar(LT_V_Vs_truncated_extension,𝜎_extension,xerr = u_LT_V_Vs_truncated_extension, yerr = u_𝜎_extension,ls = "none", marker = "x", color = "black", label = "$\sigma$ consider the tube geometry")
+plt.errorbar(LT_V_Vs_truncated,𝜎,xerr = u_LT_V_Vs_truncated,yerr=u_𝜎,ls = "none", marker = "x", color = "r", label = "$\sigma$ without consider the tube geometry")
 plt.xlabel("V-Vs[V]")
 plt.ylabel("scattering cross-section")
 plt.title("Evolution of Scattering Cross-Section ($\sigma$) with Accelerating Voltage(For extension)")
+plt.legend()
 plt.show()
 
 def calculate_uncertainty_precision(values):
