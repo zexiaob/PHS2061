@@ -18,7 +18,7 @@ from matplotlib.widgets import Cursor
 # ------------------------------------------------------------------------------
 
 ## Choose a file to plot
-filename = "guitar_pluck.wav"
+filename = "glockenspiel2.wav"
 
 ## Open the file
 signal_wave = wave.open(filename, 'r')
@@ -45,8 +45,8 @@ left, right = sig[0::2], sig[1::2]
 
 # sample_start  = 0
 # sample_end    = len(left)
-sample_start  = 200000
-sample_end    = 900000
+sample_start  = 0
+sample_end    = 100000
 
 ## Create the values for the x axis
 sample_numbers = np.arange(len(left))
@@ -70,8 +70,8 @@ ax1.set_xlabel('Sample number')
 ax1.set_title('Right channel')
 
 fig.suptitle('Recorded waveforms')
+fig.savefig('Recorded waveforms' + filename + '.jpg')
 
-plt.savefig('part1_waveform.png')
 
 # ------------------------------------------------------------------------------
 # In order to work out what freqencies are present we must do a fourier transform. 
@@ -103,9 +103,9 @@ ax0.set_yscale('log')
 ax0.set_title('Fourier transfrom of recorded waveform')
 
 ## Pick which range of frequencies to plot
-ax0.set_xlim([0, 1000])
+ax0.set_xlim([0, 5000])
 cursor = Cursor(ax0, color='green', linewidth=1)
-plt.savefig('part1_spectrum.png')
 
 ## Show the plots to see them interactively
 plt.show()
+fig.savefig('Fourier transfrom of recorded waveform' + filename + '.jpg')
