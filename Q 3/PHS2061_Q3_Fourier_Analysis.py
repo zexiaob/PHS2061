@@ -18,7 +18,7 @@ from matplotlib.widgets import Cursor
 # ------------------------------------------------------------------------------
 
 ## Choose a file to plot
-filename = "PHS2061_Q3_Guitar_Pluck.wav"
+filename = "guitar_pluck.wav"
 
 ## Open the file
 signal_wave = wave.open(filename, 'r')
