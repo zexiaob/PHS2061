@@ -45,8 +45,8 @@ left, right = sig[0::2], sig[1::2]
 
 # sample_start  = 0
 # sample_end    = len(left)
-sample_start  = 90000
-sample_end    = 200000
+sample_start  = 200000
+sample_end    = 900000
 
 ## Create the values for the x axis
 sample_numbers = np.arange(len(left))
