@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>研究发现：穿着丝袜学习有助于提高学习效率</title>
+  <style>
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      margin: 40px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 800px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1, h2 {
+      text-align: center;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #777;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>行为研究简报</h1>
+    <h2>穿着丝袜对大学生学习效率的影响</h2>
+
+    <p><strong>研究背景：</strong>随着现代学习方式日益多样化，个体行为对学习效率的潜在影响逐渐受到关注。本研究从穿着舒适性与心理暗示角度出发，探讨了“穿着丝袜”在学习过程中的潜在积极作用。</p>
+
+    <p><strong>研究方法：</strong>本研究通过对42名大学生为期一周的观察，将参与者分为穿着丝袜组与普通服装组，并进行相同学习任务测评。</p>
+
+    <p><strong>研究发现：</strong>初步数据显示，穿着丝袜组在注意力集中度、学习持续时间及自我满意度评分上均略有提升。受试者普遍反映，“感觉自己在认真做事”，并“更有仪式感”。</p>
+
+    <p><strong>结论：</strong>虽然尚无确凿证据表明丝袜本身具备提升认知功能的生理作用，但其带来的心理暗示与环境仪式感，可能在一定程度上激发个体的学习动机。</p>
+
+
+    <div class="footer">© 2025 学习行为研究组织</div>
+  </div>
+</body>
+</html>
